@@ -103,7 +103,6 @@ func tambahLangganan() {
 	langganan.Kategori = bacaString("Kategori (Entertainment/Productivity/Education/Other): ")
 	langganan.BiayaBulanan = bacaFloat("Biaya bulanan (Rp): ")
 	langganan.TanggalBayar = bacaTanggal("Tanggal pembayaran:\n")
-	langganan.MetodePembayaran = bacaString("Metode pembayaran: ")
 	langganan.Status = "Aktif"
 
 	daftarLangganan.Data[daftarLangganan.Count] = langganan
@@ -118,7 +117,6 @@ func tampilkanLangganan(langganan Langganan) {
 	fmt.Printf("Kategori: %s\n", langganan.Kategori)
 	fmt.Printf("Biaya Bulanan: Rp %.2f\n", langganan.BiayaBulanan)
 	fmt.Printf("Tanggal Bayar: %d/%d/%d\n", langganan.TanggalBayar.Hari, langganan.TanggalBayar.Bulan, langganan.TanggalBayar.Tahun)
-	fmt.Printf("Metode Pembayaran: %s\n", langganan.MetodePembayaran)
 	fmt.Printf("Status: %s\n", langganan.Status)
 	fmt.Println("---")
 }
