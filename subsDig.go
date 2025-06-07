@@ -11,7 +11,6 @@ import (
 
 const MAX_SUBSCRIPTIONS = 100
 
-// Tipe bentukan untuk tanggal
 type Tanggal struct {
 	Hari  int
 	Bulan int
@@ -58,10 +57,13 @@ func bacaString(prompt string) string {
 }
 
 func bacaInt(prompt string) int {
-	input := bacaString(prompt)
+	fmt.Print(prompt)
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSpace(input)
 	nilai, err := strconv.Atoi(input)
 	if err != nil {
-		return 0
+		return -1 // Mengembalikan -1 untuk input yang tidak valid
 	}
 	return nilai
 }
@@ -263,6 +265,11 @@ func editLangganan() {
 	lihatSemuaLangganan()
 	id := bacaInt("Masukkan ID langganan yang akan diedit: ")
 
+	if id <= 0 {
+		fmt.Println("ID tidak valid. Silakan coba lagi.")
+		return
+	}
+
 	index := cariIndexBerdasarkanID(id)
 	if index == -1 {
 		fmt.Println("Langganan dengan ID tersebut tidak ditemukan.")
@@ -289,6 +296,8 @@ func editLangganan() {
 		biaya, err := strconv.ParseFloat(biayaStr, 64)
 		if err == nil {
 			daftarLangganan.Data[index].BiayaBulanan = biaya
+		} else {
+			fmt.Println("Biaya bulanan tidak valid. Data tidak diubah.")
 		}
 	}
 
@@ -309,12 +318,18 @@ func hapusLangganan() {
 	lihatSemuaLangganan()
 	id := bacaInt("Masukkan ID langganan yang akan dihapus: ")
 
+	if id <= 0 {
+		fmt.Println("ID tidak valid. Silakan coba lagi.")
+		return
+	}
+
 	index := cariIndexBerdasarkanID(id)
 	if index == -1 {
 		fmt.Println("Langganan dengan ID tersebut tidak ditemukan.")
 		return
 	}
 
+	// Hapus langganan dengan menggeser data
 	for i := index; i < daftarLangganan.Count-1; i++ {
 		daftarLangganan.Data[i] = daftarLangganan.Data[i+1]
 	}
@@ -542,15 +557,14 @@ func rekomendasiPenghematan() {
 	}
 }
 
-// Fungsi utama
 func main() {
-	// Inisialisasi sample
+
 	daftarLangganan.Count = 0
 
 	var pilihan int
 	for {
 		tampilkanMenu()
-		fmt.Scanf("%d", &pilihan)
+		pilihan = bacaInt("Pilih menu: ")
 
 		switch pilihan {
 		case 1:
