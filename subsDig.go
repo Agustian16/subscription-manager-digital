@@ -63,7 +63,7 @@ func bacaInt(prompt string) int {
 	input = strings.TrimSpace(input)
 	nilai, err := strconv.Atoi(input)
 	if err != nil {
-		return -1 // Mengembalikan -1 untuk input yang tidak valid
+		return -1 // Mengembalikan -1 jik input tidak valid
 	}
 	return nilai
 }
@@ -97,7 +97,6 @@ func tambahLangganan() {
 
 	var langganan Langganan
 
-	// Generate data
 	langganan.ID = daftarLangganan.Count + 1
 
 	langganan.Nama = bacaString("Nama layanan: ")
@@ -159,7 +158,6 @@ func sequentialSearchKategori(kategori string) []int {
 }
 
 func urutkanBerdasarkanNama(data []Langganan, n int) {
-	// Menggunakan Selection Sort
 	for i := 0; i < n-1; i++ {
 		minIdx := i
 		for j := i + 1; j < n; j++ {
@@ -329,7 +327,7 @@ func hapusLangganan() {
 		return
 	}
 
-	// Hapus langganan dengan menggeser data
+	// delete langganan
 	for i := index; i < daftarLangganan.Count-1; i++ {
 		daftarLangganan.Data[i] = daftarLangganan.Data[i+1]
 	}
@@ -471,7 +469,7 @@ func getTanggalHariIni() Tanggal {
 }
 
 func hitungSelisihHari(tanggal1, tanggal2 Tanggal) int {
-	// Implementasi sederhana untuk menghitung selisih hari
+	// hitung selisih hari
 	// Asumsi: tanggal dalam bulan dan tahun yang sama
 	return tanggal2.Hari - tanggal1.Hari
 }
